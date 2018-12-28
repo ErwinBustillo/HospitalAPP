@@ -1,3 +1,4 @@
+import { SubirArchivoService } from './../subir-archivo/subir-archivo.service';
 import { URL_SERVICIOS } from '../../config/config';
 import { Usuario } from '../../models/usuario.model';
 import { Injectable } from '@angular/core';
@@ -15,6 +16,7 @@ export class UsuarioService {
 
   constructor(
     public router:Router,
+    public _subirArchivoService:SubirArchivoService,
     public http:HttpClient
   ) {
     this.cargarStorage();
@@ -73,7 +75,7 @@ export class UsuarioService {
         .pipe(map((resp:any)=>{
           this.guardarStorage(resp.id,resp.token,resp.usuario);
           return true;
-        }))
+        }));
   }
 
   crearUsuario(usuario:Usuario){
@@ -84,6 +86,31 @@ export class UsuarioService {
         //console.log(resp);
         return resp.usuario;
       }));
+  }
+
+  actualizarUsuario(usuario:Usuario){
+    let url = URL_SERVICIOS + '/usuario/' + usuario._id;
+    url += '?token=' + this.token;
+    return this.http.put(url,usuario)
+      .pipe(map((resp:any)=>{
+       
+         swal('Usuario actualizado', usuario.nombre, 'success');
+         let usuarioDB:Usuario = resp.usuario;
+         this.guardarStorage(usuarioDB._id,this.token, usuarioDB);
+         return true;
+      }));
+  }
+
+  cambiarImagen(archivo:File, id:string){
+      this._subirArchivoService.subirArchivo(archivo,'usuarios', id)
+        .then( (resp:any) => {
+          console.log(resp);
+          this.usuario.img = resp.usuario.img;
+          swal('Imagen Actualizada', this.usuario.nombre,'success');
+          this.guardarStorage(id,this.token,this.usuario);
+        }).catch(resp =>{
+          console.log(resp);
+        })
   }
 
   
