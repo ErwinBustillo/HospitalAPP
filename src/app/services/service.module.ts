@@ -7,7 +7,8 @@ import {SettingsService,
   HospitalService,
   MedicoService,
   LoginGuardGuard,
-SubirArchivoService} from './service.index';
+SubirArchivoService,
+AdminGuard} from './service.index';
 
 import { HttpClientModule } from '@angular/common/http';
 import { ModalUploadService } from '../components/modal-upload/modal-upload.service';
@@ -26,6 +27,7 @@ import { ModalUploadService } from '../components/modal-upload/modal-upload.serv
     MedicoService,
     SubirArchivoService,
     LoginGuardGuard,
+    AdminGuard,
     ModalUploadService
   ]
 })

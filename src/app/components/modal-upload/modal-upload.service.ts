@@ -15,6 +15,7 @@ export class ModalUploadService {
 
   constructor() {
     console.log('MODAL SERVICE');
+    this.ocultarModal();
   }
 
   ocultarModal(){
