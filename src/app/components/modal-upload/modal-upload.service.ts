@@ -18,9 +18,9 @@ export class ModalUploadService {
   }
 
   ocultarModal(){
-    this.oculto = 'oculto';
     this.tipo = null;
     this.id = null;
+    this.oculto = 'oculto';
   }
 
   mostrarModal(tipo:string, id: string){

@@ -9,8 +9,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ModalUploadComponent implements OnInit {
 
-
-
   imagenSubir: File;
   imagenTemp:string;
 
@@ -19,6 +17,7 @@ export class ModalUploadComponent implements OnInit {
   }
 
   ngOnInit() {
+    
   }
 
   seleccionImagen(archivo:File){
@@ -44,7 +43,6 @@ export class ModalUploadComponent implements OnInit {
   subirImagen(){
       this.subirArchivoService.subirArchivo(this.imagenSubir,this.mus.tipo, this.mus.id)
           .then(resp => {
-            console.log(resp);
             this.mus.notificacion.emit(resp);
             this.cerrarModal();
           }).catch( err => {
