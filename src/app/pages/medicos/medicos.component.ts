@@ -11,6 +11,7 @@ import { Component, OnInit } from '@angular/core';
 export class MedicosComponent implements OnInit {
 
   medicos:Medico[] = [];
+  cargando:boolean = true;
 
   constructor(public medicosService:MedicoService, private mus:ModalUploadService) { }
 
@@ -19,8 +20,10 @@ export class MedicosComponent implements OnInit {
   }
 
   cargarMedicos(){
+    this.cargando = true;
     this.medicosService.cargarMedicos().subscribe( (medicos)=> {
       this.medicos = medicos;
+      this.cargando = false;
     })
   }
 

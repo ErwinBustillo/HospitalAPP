@@ -5,17 +5,15 @@ import { Injectable, EventEmitter } from '@angular/core';
 })
 export class ModalUploadService {
 
+  public oculto:string = 'oculto';
   public tipo:string;
   public id:string;
 
-  public oculto:string = 'oculto';
 
   public notificacion = new EventEmitter<any>();
 
-
   constructor() {
     console.log('MODAL SERVICE');
-    this.ocultarModal();
   }
 
   ocultarModal(){

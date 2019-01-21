@@ -17,6 +17,7 @@ export class UsuarioService {
   token:string;
 
   menu:any = [];
+
   constructor(
     public router:Router,
     public _subirArchivoService:SubirArchivoService,
@@ -24,6 +25,27 @@ export class UsuarioService {
   ) {
     this.cargarStorage();
    }
+
+  renuevaToken(){
+    let url = URL_SERVICIOS + '/login/renuevatoken?token=' + this.token;
+    return this.http.get(url)
+          .pipe(
+            map((resp:any)=>{
+              this.token = resp.token;
+              localStorage.setItem('token', this.token);
+              return true;
+            }),catchError(err=> {
+              swal('No se pudo renovar token', 'No fue posible renovar token', 'error');
+              this.router.navigate(['/login']);
+              return throwError(err);
+            })
+          );
+  }
+
+  estaLogueado(){
+    return (this.token.length > 5)? true:false;
+  }
+
 
   cargarStorage(){
     if (localStorage.getItem('token')) {
@@ -37,9 +59,7 @@ export class UsuarioService {
     }
   }
 
-  estaLogueado(){
-    return (this.token.length > 5)? true:false;
-  }
+  
 
   guardarStorage(id:string, token:string, usuario:Usuario, menu:any){
     localStorage.setItem('id',id);
